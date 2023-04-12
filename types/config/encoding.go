@@ -5,6 +5,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/simapp/params"
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/cosmos/cosmos-sdk/types/module"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
 // MakeEncodingConfig creates an EncodingConfig to properly handle all the messages
@@ -14,6 +15,7 @@ func MakeEncodingConfig(managers []module.BasicManager) func() params.EncodingCo
 		std.RegisterLegacyAminoCodec(encodingConfig.Amino)
 		std.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 		paymenttypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+		stakingtypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 		manager := mergeBasicManagers(managers)
 		manager.RegisterLegacyAminoCodec(encodingConfig.Amino)
 		manager.RegisterInterfaces(encodingConfig.InterfaceRegistry)
