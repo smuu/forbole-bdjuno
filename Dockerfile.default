@@ -1,11 +1,11 @@
-FROM docker.io/golang:1.18-alpine AS builder
-RUN apk update && apk add --no-cache make git
+FROM docker.io/golang:1.19.8-alpine3.17 AS builder
+RUN apk update && apk add --no-cache make git gcc musl-dev
 WORKDIR /go/src/github.com/forbole/bdjuno
 COPY . ./
 RUN go mod download
 RUN make build
 
-FROM docker.io/alpine:latest
+FROM docker.io/alpine:3.17.3
 WORKDIR /bdjuno
 COPY --from=builder /go/src/github.com/forbole/bdjuno/build/bdjuno /usr/bin/bdjuno
 CMD [ "bdjuno" ]
